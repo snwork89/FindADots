@@ -82,25 +82,25 @@ public static class UserEvents
     }
 
 
-    public delegate void BulkDeselect(string letter, Vector3 squarePosition, int squareIndex,  bool isSelected);
+    public delegate void BulkDeselect(string letter, Vector3 squarePosition, int squareIndex,  bool isSelected,bool isInterActable);
     public static event BulkDeselect OnBulkDeselect;
 
 
-    public static void BulkDeselectMethod(string letter, Vector3 squarePosition, int squareIndex,  bool isSelected)
+    public static void BulkDeselectMethod(string letter, Vector3 squarePosition, int squareIndex,  bool isSelected, bool isInterActable)
     {
         if (OnBulkDeselect != null)
-            OnBulkDeselect(letter, squarePosition, squareIndex, isSelected);
+            OnBulkDeselect(letter, squarePosition, squareIndex, isSelected,isInterActable);
     }
 
 
-    public delegate void CheckSqaure(string letter,Vector3 squarePosition,int squareIndex, ref bool isSelected);
+    public delegate void CheckSqaure(string letter,Vector3 squarePosition,int squareIndex, ref bool isSelected,bool isInterActable);
     public static event CheckSqaure OnCheckSqaure;
 
 
-    public static void CheckSqaureMethod(string letter, Vector3 squarePosition, int squareIndex,ref bool isSelected)
+    public static void CheckSqaureMethod(string letter, Vector3 squarePosition, int squareIndex,ref bool isSelected,bool isInterActable)
     {
         if (OnCheckSqaure != null)
-            OnCheckSqaure(letter, squarePosition,squareIndex,ref isSelected);
+            OnCheckSqaure(letter, squarePosition,squareIndex,ref isSelected, isInterActable);
     }
 
     //----------------------------------
@@ -141,6 +141,20 @@ public static class UserEvents
     {
         if (OnStopChangeColorFromIndex != null)
             OnStopChangeColorFromIndex(index);
+    }
+
+
+
+    //----------------------------------
+
+    public delegate void MakeLetterDisable(List<int> indexes);
+    public static event MakeLetterDisable OnMakeLetterDisable;
+
+
+    public static void MakeLetterDisableMethod(List<int> indexes)
+    {
+        if (OnMakeLetterDisable != null)
+            OnMakeLetterDisable(indexes);
     }
 
 

@@ -13,18 +13,23 @@ public class GridSquare : MonoBehaviour
     private int _index = -1;
     private bool _isInitIndex;
     private bool _selected;
+    private bool _isInterActable;
 
 
     private void Awake()
     {
         _selected = false;
-    
+        _isInterActable = true;
         _displayedImage = GetComponent<SpriteRenderer>();
 
         
 
     }
 
+    public void SetIsInterActable(bool b)
+    {
+        _isInterActable = b;
+    }
 
     public void SetIsInitIndex (bool value,int index)
     {
@@ -203,7 +208,7 @@ public class GridSquare : MonoBehaviour
     {
       
 
-            UserEvents.CheckSqaureMethod(_mappingData.letter, gameObject.transform.position, _index,ref _selected);
+            UserEvents.CheckSqaureMethod(_mappingData.letter, gameObject.transform.position, _index,ref _selected,_isInterActable);
       
     }
     // private void OnMouseDown()
@@ -216,7 +221,7 @@ public class GridSquare : MonoBehaviour
 
     private void OnMouseDown()
     {
-        UserEvents.BulkDeselectMethod(_mappingData.letter, gameObject.transform.position, _index, _selected);
+        UserEvents.BulkDeselectMethod(_mappingData.letter, gameObject.transform.position, _index, _selected,_isInterActable);
     }
 
 

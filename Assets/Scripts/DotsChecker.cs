@@ -131,47 +131,53 @@ public class DotsChecker : MonoBehaviour
         }
     }
 
-    private void SquareSelected(string letter, Vector3 squarePosition, int squareIndex, ref bool isSelected)
+    private void SquareSelected(string letter, Vector3 squarePosition, int squareIndex, ref bool isSelected,bool isInterActable)
     {
-
-
-        GameScore elementForCurrentLetter = gameScoresList.Find(item => item.letter == letter);
-        if (isSelected==false && IsElementSideBySide(elementForCurrentLetter.selectedSquareIndexes[^1], squareIndex))
+        if(isInterActable == true)
         {
-
-         
-            isSelected = true;
-            elementForCurrentLetter.selectedSquareIndexes.Add(squareIndex);
-          
-            elementForCurrentLetter.scoreVisual.GetComponent<ScoreButton>().ChangeText(elementForCurrentLetter.selectedSquareIndexes.Count +" / " + " " + elementForCurrentLetter.totalLetterLength);
-            Debug.Log("inside if"+elementForCurrentLetter.selectedSquareIndexes.Count);
-            UserEvents.SelectSquareMethod(squarePosition);
-           
-            UserEvents.DrawLineFromIndexMethod(elementForCurrentLetter.selectedSquareIndexes[elementForCurrentLetter.selectedSquareIndexes.Count - 2], elementForCurrentLetter.selectedSquareIndexes[elementForCurrentLetter.selectedSquareIndexes.Count - 1],elementForCurrentLetter.linePrefab);
-
-            int selectedSquareCount = elementForCurrentLetter.selectedSquareIndexes.Count;
-            if (selectedSquareCount == 2)
+            GameScore elementForCurrentLetter = gameScoresList.Find(item => item.letter == letter);
+            if (isSelected == false && IsElementSideBySide(elementForCurrentLetter.selectedSquareIndexes[^1], squareIndex))
             {
-                UserEvents.StopChangeColorFromIndexMethod(elementForCurrentLetter.selectedSquareIndexes[0]);
-            }
-            if (selectedSquareCount == elementForCurrentLetter.totalLetterLength)
-            {
-                elementForCurrentLetter.scoreVisual.GetComponent<ScoreButton>().ScoreCompleted();
-            }
 
+
+                isSelected = true;
+                elementForCurrentLetter.selectedSquareIndexes.Add(squareIndex);
+
+                elementForCurrentLetter.scoreVisual.GetComponent<ScoreButton>().ChangeText(elementForCurrentLetter.selectedSquareIndexes.Count + " / " + " " + elementForCurrentLetter.totalLetterLength);
+                Debug.Log("inside if" + elementForCurrentLetter.selectedSquareIndexes.Count);
+                UserEvents.SelectSquareMethod(squarePosition);
+
+                UserEvents.DrawLineFromIndexMethod(elementForCurrentLetter.selectedSquareIndexes[elementForCurrentLetter.selectedSquareIndexes.Count - 2], elementForCurrentLetter.selectedSquareIndexes[elementForCurrentLetter.selectedSquareIndexes.Count - 1], elementForCurrentLetter.linePrefab);
+
+                int selectedSquareCount = elementForCurrentLetter.selectedSquareIndexes.Count;
+                if (selectedSquareCount == 2)
+                {
+                    UserEvents.StopChangeColorFromIndexMethod(elementForCurrentLetter.selectedSquareIndexes[0]);
+                }
+                if (selectedSquareCount == elementForCurrentLetter.totalLetterLength)
+                {
+                    elementForCurrentLetter.scoreVisual.GetComponent<ScoreButton>().ScoreCompleted();
+                    UserEvents.MakeLetterDisableMethod(elementForCurrentLetter.selectedSquareIndexes);
+                }
+
+            }
         }
+
+        
       
 
 
     }
 
-    private void BulkDeselect(string letter, Vector3 squarePosition, int squareIndex, bool isSelected)
+
+
+    private void BulkDeselect(string letter, Vector3 squarePosition, int squareIndex, bool isSelected,bool isInterActable)
     {
-        GameScore elementForCurrentLetter = gameScoresList.Find(item => item.letter == letter);
+
         Debug.Log("value of isSelected" + isSelected+"squyas"+squareIndex);
-        if (isSelected == true)
+        if (isSelected == true && isInterActable==true)
         {
-         
+            GameScore elementForCurrentLetter = gameScoresList.Find(item => item.letter == letter);
 
             int indexForCurrentElement = elementForCurrentLetter.selectedSquareIndexes.FindIndex(item => item == squareIndex);
 

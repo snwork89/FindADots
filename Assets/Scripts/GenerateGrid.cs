@@ -25,12 +25,14 @@ private List<GameObject> _squareList = new List<GameObject>();
     {
         UserEvents.OnDrawLineFromIndex += DrawLineFromIndex;
         UserEvents.OnStopChangeColorFromIndex += StopChangeColorFromIndex;
+        UserEvents.OnMakeLetterDisable += MakeLetterDisable;
     }
 
     private void OnDisable()
     {
         UserEvents.OnDrawLineFromIndex -= DrawLineFromIndex;
         UserEvents.OnStopChangeColorFromIndex -= StopChangeColorFromIndex;
+        UserEvents.OnMakeLetterDisable -= MakeLetterDisable;
     }
 
     private void SetSquarePosition()
@@ -144,6 +146,13 @@ private List<GameObject> _squareList = new List<GameObject>();
         }
     }
 
+    private void MakeLetterDisable(List<int> indexes)
+    {
+        for(int i = 0; i < indexes.Count; i++)
+        {
+            _squareList[indexes[i]].GetComponent<GridSquare>().SetIsInterActable(false);
+        }
+    }
 
     private void StopChangeColorFromIndex(int index)
     {
